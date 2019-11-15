@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component,useState,useEffect } from 'react';
+import { Row,Button,Col,Container } from 'reactstrap';
+import { MdInfo } from 'react-icons/md';
+import Chart from './Chart';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+    render() {
+        return(
+            <div>
+                <Header />
+                <Chart />
+            </div>
+        );
+    }
 }
 
-export default App;
+/**
+* Header/Top Banner for the webpage
+**/
+function Header(){
+    const [isMobile,toggleMobile] = useState(window.innerWidth > 850);
+
+    window.addEventListener("resize", ()=>{
+        let curWindowState = (window.innerWidth > 850)
+        if(isMobile !== curWindowState)
+            toggleMobile(curWindowState);
+    });
+
+    return(
+        <div className="w-100 mw-100 top-banner">
+            <Container className="py-3">
+                <Row className="justify-content-inbetween w-100 mw-100">
+                    <Col className="d-flex">
+                        <p className="title h2 mr-auto">
+                            EuroSkills
+                        </p>
+                    </Col>
+                    <Col className="d-flex">
+                        {
+                            isMobile ?   
+                                <Button className="ml-auto">
+                                    About
+                                </Button>
+                            :
+                                <MdInfo className="ml-auto h1"/> 
+                        }    
+                    </Col>      
+                </Row>
+            </Container>  
+        </div>      
+    );
+}
