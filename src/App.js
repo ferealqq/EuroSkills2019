@@ -1,14 +1,14 @@
 import React, { Component,useState,useEffect } from 'react';
 import { Row,Button,Col,Container } from 'reactstrap';
 import { MdInfo } from 'react-icons/md';
-import Chart from './Chart';
+import AppContent from './AppContent';
 
 export default class App extends Component {
     render() {
         return(
             <div>
                 <Header />
-                <Chart />
+                <AppContent />
             </div>
         );
     }
