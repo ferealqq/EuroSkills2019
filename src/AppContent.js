@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container,Col,Form,FormGroup,Input,Label,Row } from 'reactstrap';
+import { Container,Col,Form,FormGroup,Input,Label,Row,UncontrolledTooltip } from 'reactstrap';
 import myData from './easing-functions-subset-1.json';
 import Chart from './Chart';
 
@@ -27,9 +27,16 @@ export default class AppContent extends Component {
 		}
 	}
 	selectEasingFunction(easingFunctionKey){
-		this.setState({
-			easingFunctionData: myData.easingFunctions[easingFunctionKey],
-		})
+		if(this.state.easingFunctionData && this.state.easingFunctionData.text === easingFunctionKey){
+			document.getElementById(easingFunctionKey).checked = false;
+			this.setState({
+				easingFunctionData: {},
+			})
+		}else{
+			this.setState({
+				easingFunctionData: myData.easingFunctions[easingFunctionKey],
+			})
+		}
 	}
 	render() {
 		const { easingFunctionData,isMobile } = this.state;
@@ -80,44 +87,62 @@ function EasingOptionForm(props){
 		<Col className="option-form">
 			<Form>
 				<FormGroup tag="fieldset">
-					<legend>
+					<legend id="test">
 						Select Easing Function
 					</legend>
-					<FormGroup check>
-						<Input type="radio" id="easeInOutQuad" onChange={()=>props.selectEasingFunction("easeInOutQuad")} name="r-grp"/>{' '}
+					<FormGroup id="easeInOutQuadForm" check>
+						<Input type="radio" id="easeInOutQuad" onClick={()=>props.selectEasingFunction("easeInOutQuad")} name="r-grp"/>{' '}
 						<Label for="easeInOutQuad">
 							easeInOutQuad	
 						</Label>
+						<UncontrolledTooltip target="easeInOutQuadForm" placement="left">
+							{myData.easingFunctions.easeInOutQuad.equation}
+						</UncontrolledTooltip>
 					</FormGroup>
-					<FormGroup check>
-						<Input type="radio" id="easeInQuad"onChange={()=>props.selectEasingFunction("easeInQuad")} name="r-grp" />{' '}
+					<FormGroup id="easeInQuadForm" check>
+						<Input type="radio" id="easeInQuad"onClick={()=>props.selectEasingFunction("easeInQuad")} name="r-grp" />{' '}
 						<Label for="easeInQuad">
-							easeInOutQuad
+							easeInQuad
 						</Label>
+						<UncontrolledTooltip target="easeInQuadForm" placement="left">
+							{myData.easingFunctions.easeInQuad.equation}
+						</UncontrolledTooltip>
 					</FormGroup>
-					<FormGroup check>
-						<Input type="radio" id="easeInQuint" onChange={()=>props.selectEasingFunction("easeInQuint")} name="r-grp" />{' '}
-						<Label for="easeInQuint">
-							easeInQuint
-						</Label>
-					</FormGroup>
-					<FormGroup check>
-						<Input type="radio" id="easeOutQuad"onChange={()=>props.selectEasingFunction("easeOutQuad")} name="r-grp" />{' '}
+					<FormGroup id="easeOutQuadForm" check>
+						<Input type="radio" id="easeOutQuad"onClick={()=>props.selectEasingFunction("easeOutQuad")} name="r-grp" />{' '}
 						<Label for="easeOutQuad">
 							easeOutQuad
 						</Label>
+						<UncontrolledTooltip target="easeOutQuadForm" placement="left">
+							{myData.easingFunctions.easeOutQuad.equation}
+						</UncontrolledTooltip>
 					</FormGroup>
-					<FormGroup check>
-						<Input type="radio" id="easeOutQuint" onChange={()=>props.selectEasingFunction("easeOutQuint")} name="r-grp" />{' '}
+					<FormGroup id="easeInQuintForm" check>
+						<Input type="radio" id="easeInQuint" onClick={()=>props.selectEasingFunction("easeInQuint")} name="r-grp" />{' '}
+						<Label for="easeInQuint">
+							easeInQuint
+						</Label>
+						<UncontrolledTooltip target="easeInQuintForm" placement="left">
+							{myData.easingFunctions.easeInQuint.equation}
+						</UncontrolledTooltip>	
+					</FormGroup>
+					<FormGroup id="easeOutQuintForm" check>
+						<Input type="radio" id="easeOutQuint" onClick={()=>props.selectEasingFunction("easeOutQuint")} name="r-grp" />{' '}
 						<Label for="easeOutQuint">
 							easeOutQuint
 						</Label>
+						<UncontrolledTooltip target="easeOutQuintForm" placement="left">
+							{myData.easingFunctions.easeOutQuint.equation}
+						</UncontrolledTooltip>							
 					</FormGroup>
-					<FormGroup check>
-						<Input type="radio" id="linear" onChange={()=>props.selectEasingFunction("linear")} name="r-grp" />{' '}
+					<FormGroup id="linearForm" check>
+						<Input type="radio" id="linear" onClick={()=>props.selectEasingFunction("linear")} name="r-grp" />{' '}
 						<Label for="linear">
 							linear
 						</Label>
+						<UncontrolledTooltip target="linearForm" placement="left">
+							{myData.easingFunctions.linear.equation}
+						</UncontrolledTooltip>							
 					</FormGroup>																																														
 				</FormGroup>
 			</Form>

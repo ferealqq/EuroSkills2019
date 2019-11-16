@@ -107,7 +107,7 @@ class LineChart extends Component{
     }
 	makePath() {
 		const { data, color } = this.props
-		if(!data) return;
+		if(!data) return "";
 		let pathD = ` M  ${this.getSvgX(data[0].x)} ${this.getSvgY(data[0].y)} `
 		pathD += data.map((point, i) => {
 			return `L ${this.getSvgX(point.x)} ${this.getSvgY(point.y)}  `
