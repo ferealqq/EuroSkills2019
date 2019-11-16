@@ -134,9 +134,16 @@ class LineChart extends Component{
 		};
 	}	
 	play(){
+		if(this.state.playing){
+			clearInterval(this.rangeInterval);
+			this.setState({
+				playing: false,
+				rangeValue: 0,
+				circleVisibility: false,
+			})		
+		}
 		this.setState({
 			playing: true,
-			rangeValue: 1,
 		})
 		this.rangeInterval = setInterval(()=>{
 			this.setState({
@@ -152,7 +159,7 @@ class LineChart extends Component{
 					})
 				}
 			})
-		},70)
+		},50)
 	}
 	render(){
 		const { rangeValue,circleVisibility,playing } = this.state;

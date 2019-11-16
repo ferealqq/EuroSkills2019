@@ -1,0 +1,88 @@
+$defaultColorScheme: #FAB824;
+$shadowierDefault: #E3B614;
+$dark: #211805;
+
+.top-banner{
+	background-color: $defaultColorScheme;
+}
+
+.linechart_path {
+	stroke: rgb(253, 200, 39);
+	vector-effect: non-scaling-stroke; 
+	stroke-width: 3; 
+	fill: none;
+}
+.linechart_axis {
+	stroke: #000000;
+}
+
+.graph .grid{
+	stroke: #ccc;
+	stroke-dasharray: 0;
+	stroke-width: 1;	
+}
+.grid text{
+	font-size: 1.4em;
+}
+
+.progress-display{
+	fill: #ffff;
+	stroke: black;
+	stroke-width: 3;
+	transition:  0.06s ease;
+}
+.progress-display-text{
+	font-size: 1.5em;
+	transition: 0.05s ease;
+}
+
+[type="radio"]:checked,
+[type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+[type="radio"]:checked + label,
+[type="radio"]:not(:checked) + label
+{
+    position: relative;
+    padding-left: 28px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: $dark;
+}
+[type="radio"]:checked + label:before,
+[type="radio"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: #fff;
+}
+[type="radio"]:checked + label:after,
+[type="radio"]:not(:checked) + label:after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: $shadowierDefault;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border-radius: 100%;
+    -webkit-transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);;
+}
+[type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+[type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}

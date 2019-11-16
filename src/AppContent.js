@@ -65,10 +65,10 @@ export default class AppContent extends Component {
 function EasingFunctionInformation(props){
 	return(
 		<React.Fragment>
-			<Row>
+			<Row className="px-3">
 				<p> Formula: {props.data.formula} </p>
 			</Row>
-			<Row>
+			<Row className="px-3">
 				<p> Description: {props.data.description} </p>
 			</Row>
 		</React.Fragment>
@@ -77,45 +77,45 @@ function EasingFunctionInformation(props){
 
 function EasingOptionForm(props){
 	return(
-		<Col>
+		<Col className="m-radio">
 			<Form>
 				<FormGroup tag="fieldset">
 					<legend>
 						Select Easing Function
 					</legend>
 					<FormGroup check>
-						<Label check>
-							<Input type="radio" onChange={()=>props.selectEasingFunction("easeInOutQuad")} name="radio1"/>{' '}
+						<Input type="radio" id="easeInOutQuad" onChange={()=>props.selectEasingFunction("easeInOutQuad")} name="r-grp"/>{' '}
+						<Label for="easeInOutQuad">
 							easeInOutQuad	
 						</Label>
 					</FormGroup>
 					<FormGroup check>
-						<Label check>
-							<Input type="radio" onChange={()=>props.selectEasingFunction("easeInQuad")} name="radio1" />{' '}
+						<Input type="radio" id="easeInQuad"onChange={()=>props.selectEasingFunction("easeInQuad")} name="r-grp" />{' '}
+						<Label for="easeInQuad">
 							easeInOutQuad
 						</Label>
 					</FormGroup>
 					<FormGroup check>
-						<Label check>
-							<Input type="radio" onChange={()=>props.selectEasingFunction("easeInQuint")} name="radio1" />{' '}
+						<Input type="radio" id="easeInQuint" onChange={()=>props.selectEasingFunction("easeInQuint")} name="r-grp" />{' '}
+						<Label for="easeInQuint">
 							easeInQuint
 						</Label>
 					</FormGroup>
 					<FormGroup check>
-						<Label check>
-							<Input type="radio" onChange={()=>props.selectEasingFunction("easeOutQuad")} name="radio1" />{' '}
+						<Input type="radio" id="easeOutQuad"onChange={()=>props.selectEasingFunction("easeOutQuad")} name="r-grp" />{' '}
+						<Label for="easeOutQuad">
 							easeOutQuad
 						</Label>
 					</FormGroup>
 					<FormGroup check>
-						<Label check>
-							<Input type="radio" onChange={()=>props.selectEasingFunction("easeOutQuint")} name="radio1" />{' '}
+						<Input type="radio" id="easeOutQuint" onChange={()=>props.selectEasingFunction("easeOutQuint")} name="r-grp" />{' '}
+						<Label for="easeOutQuint">
 							easeOutQuint
 						</Label>
 					</FormGroup>
 					<FormGroup check>
-						<Label check>
-							<Input type="radio" onChange={()=>props.selectEasingFunction("linear")} name="radio1" />{' '}
+						<Input type="radio" id="linear" onChange={()=>props.selectEasingFunction("linear")} name="r-grp" />{' '}
+						<Label for="linear">
 							linear
 						</Label>
 					</FormGroup>																																														
