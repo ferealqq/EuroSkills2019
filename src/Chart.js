@@ -89,8 +89,10 @@ class LineChart extends Component{
 		this.state = {
 			rangeValue: 10,
 			circleVisibility: false,
+			playing: false,
 		};
 		this.handleRangeChange = this.handleRangeChange.bind(this);
+		this.play = this.play.bind(this);
 	}
     getSvgX(x){
     	let { svgWidth: width } = this.props.styles;
@@ -126,8 +128,29 @@ class LineChart extends Component{
 			y: (y + centerY)
 		};
 	}	
+	play(){
+		this.setState({
+			playing: true,
+			rangeValue: 1,
+		})
+		const rangeInterval = setInterval(()=>{
+			this.setState({
+				rangeValue: this.state.rangeValue+1,
+				circleVisibility: this.state.rangeValue+1 !== 0 && this.state.rangeValue+1 !== 100,
+			},()=>{
+				if(this.state.rangeValue>=100){
+					clearInterval(rangeInterval);
+					this.setState({
+						playing: false,
+						rangeValue: 0,
+						circleVisibility: false,
+					})
+				}
+			})
+		},70)
+	}
 	render(){
-		const { rangeValue,circleVisibility } = this.state;
+		const { rangeValue,circleVisibility,playing } = this.state;
 
 		const { data,styles } = this.props;
 		const { x: textX, y: textY } = this.centerText(this.getSvgX(data[rangeValue].x),this.getSvgY(data[rangeValue].y));
@@ -154,10 +177,10 @@ class LineChart extends Component{
 					</text>
 				</svg>
 				<Row className="p-1">
-					<Input type="range" min="0" max="100" value={rangeValue} onChange={this.handleRangeChange} />
+					<Input type="range" min="0" max="100" value={!playing ? rangeValue : 0} onChange={this.handleRangeChange} disabled={playing}/>
 				</Row>
 				<Row className="p-2">
-					<Button className="m-auto" color="warning"> Play </Button>
+					<Button className="m-auto" color="warning" onClick={this.play}> Play </Button>
 				</Row>
 			</React.Fragment>
 		);
