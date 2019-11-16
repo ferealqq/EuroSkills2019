@@ -1,6 +1,7 @@
 import React, { Component,useState,useEffect } from 'react';
 import { Row,Button,Col,Container } from 'reactstrap';
 import { MdInfo } from 'react-icons/md';
+import { CSSTransition } from 'react-transition-group';
 import AppContent from './AppContent';
 
 export default class App extends Component {
@@ -18,27 +19,67 @@ export default class App extends Component {
     }
     render() {
         const { isAbout } = this.state;
+        const duration = 300;
+
+        const defaultStyle = {
+            transition: `opacity ${duration}ms ease-in-out`,
+            opacity: 0,
+        }
+
+        const transitionStyles = {
+            entering: { opacity: 1 },
+            entered:  { opacity: 1 },
+            exiting:  { opacity: 0 },
+            exited:  { opacity: 0 },
+        };        
         return(
             <div>
                 <Header handleAboutClick={this.handleAboutClick} isAbout={isAbout}/>
                 {
+                    !isAbout ? 
+                        <CSSTransition
+                            in={!isAbout}
+                            timeout={300}
+                            classNames="alert"
+                            unmountOnExit
+                        >                    
+                            <AppContent />
+                        </CSSTransition>                
+                :
+                        <CSSTransition
+                            in={isAbout}
+                            timeout={300}
+                            classNames="alert"
+                            unmountOnExit
+                        >                    
+                            <Container>
+                                <p> This is the about page </p>
+                                <p> My name is Pekka Mattinen, I have decided to accept this challenge </p>
+                                <p> This is the prelude exercise for EuroSkills 2020 Finnish pruning trials </p>
+                            </Container>
+                        </CSSTransition>                 
+                }
+            </div>
+        );
+    }
+}
+
+/**
+                {
                     !isAbout ?
-                        <div className="flipper">
+                        <div className="page-content">
                             <AppContent />
                         </div>
                     :
-                        <div className="flipper">
+                        <div className="page-content about-page">
                             <Container>
                                 <p> this is the about page </p>
                                 <p> My name is Pekka Mattinen, I have decided to accept this challenge </p>
                                 <p> This is the prelude exercise for EuroSkills 2020 Finnish pruning trials </p>
                             </Container>
                         </div>
-                }
-            </div>
-        );
-    }
-}
+                } 
+**/
 
 /**
 * Header/Top Banner for the webpage
