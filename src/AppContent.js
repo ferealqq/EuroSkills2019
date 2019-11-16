@@ -5,7 +5,7 @@ import Chart from './Chart';
 
 export default class AppContent extends Component {
 	state = {
-		easingFunctionData: myData.easingFunctions.easeInOutQuad,
+		easingFunctionData: null,
 		isMobile: window.innerWidth < 850,
 	};
 	constructor(props){

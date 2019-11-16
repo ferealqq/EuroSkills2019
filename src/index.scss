@@ -10,8 +10,9 @@ $lightDefault: #FBCE6E;
 .linechart_path {
 	stroke: rgb(253, 200, 39);
 	vector-effect: non-scaling-stroke; 
-	stroke-width: 3; 
+	stroke-width: 3px; 
 	fill: none;
+	transition: all 1.2s ease-in-out;
 }
 .linechart_axis {
 	stroke: #000000;
@@ -19,7 +20,7 @@ $lightDefault: #FBCE6E;
 
 .graph .grid{
 	stroke: #ccc;
-	stroke-dasharray: 0;
+	stroke-dasharray: 0;	
 	stroke-width: 1;	
 }
 .grid text{
@@ -30,11 +31,11 @@ $lightDefault: #FBCE6E;
 	fill: #ffff;
 	stroke: black;
 	stroke-width: 3;
-	transition:  0.06s ease;
+	transition:  0.03s ease;
 }
 .progress-display-text{
 	font-size: 1.5em;
-	transition: 0.05s ease;
+	transition: 0.029s ease;
 }
 
 [type="radio"]+label{

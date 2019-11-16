@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Container,Row,Input,Button,Col } from 'reactstrap';
 import myData from './easing-functions-subset-1.json';
-import {select }from 'd3';
-import d from './index.css';
 /**
 * returns a function that can calculate the equation 
 * example usage: calculateEquation("2+x")(2)
@@ -109,6 +107,7 @@ class LineChart extends Component{
     }
 	makePath() {
 		const { data, color } = this.props
+		if(!data) return;
 		let pathD = ` M  ${this.getSvgX(data[0].x)} ${this.getSvgY(data[0].y)} `
 		pathD += data.map((point, i) => {
 			return `L ${this.getSvgX(point.x)} ${this.getSvgY(point.y)}  `
@@ -160,21 +159,22 @@ class LineChart extends Component{
 					})
 				}
 			})
-		},50)
+		},30)
 	}
 	render(){
 		const { rangeValue,circleVisibility,playing } = this.state;
-
 		const { data,styles } = this.props;
-		const { x: textX, y: textY } = this.centerText(this.getSvgX(data[rangeValue].x),this.getSvgY(data[rangeValue].y));
+		let x = data ? this.getSvgX(data[rangeValue].x) : 0;
+		let y = data ? this.getSvgY(data[rangeValue].y) : 0;
+		const { x: textX, y: textY } = this.centerText(x,y);
 		return(
 			<React.Fragment>
-				<svg viewBox={`-100 -100 ${styles.svgWidth+200} ${styles.svgHeight+200}`} className="graph">
+				<svg viewBox={`-100 -100 ${styles.svgWidth+200} ${styles.svgHeight+200}`} className="graph" xmlns="http://www.w3.org/2000/svg" version="1.1">
 					<path d={this.makePath()} className="linechart_path"/>
 					<Axis {...this.props} />
 					<circle 
-						cx={this.getSvgX(data[rangeValue].x)} 
-						cy={this.getSvgY(data[rangeValue].y)} 
+						cx={x} 
+						cy={y} 
 						className="progress-display"
 						r={styles.circleRadius}
 						style={{visibility: circleVisibility ? "" : "hidden"}}

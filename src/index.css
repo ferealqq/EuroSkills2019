@@ -11,35 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
-.top-banner{
-	background-color: #FAB824;
-}
-
-.linechart_path {
-	stroke: rgb(253, 200, 39);
-	vector-effect: non-scaling-stroke; 
-	stroke-width: 3; 
-	fill: none;
-}
-.linechart_axis {
-	stroke: #000000;
-}
-
-.graph .grid{
-	stroke: #ccc;
-	stroke-dasharray: 0;
-	stroke-width: 1;	
-}
-.grid text{
-	font-size: 1.4em;
-}
-
-.progress-display{
-	fill: #ffff;
-	stroke: black;
-	stroke-width: 3;
-}
-.progress-display-text{
-	font-size: 1.5em;
-}
