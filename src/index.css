@@ -25,3 +25,16 @@ code {
 .linechart_axis {
 	stroke: #000000;
 }
+
+.graph .grid{
+	stroke: #ccc;
+	stroke-dasharray: 0;
+	stroke-width: 1;	
+}
+
+.progress-display{
+	fill: #ffffff;
+	stroke: black;
+	stroke-width: 3;
+	r: 20;
+}
