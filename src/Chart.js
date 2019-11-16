@@ -94,6 +94,11 @@ class LineChart extends Component{
 		this.handleRangeChange = this.handleRangeChange.bind(this);
 		this.play = this.play.bind(this);
 	}
+	componentWillUnmount(){
+		if(this.rangeInterval){
+			clearInterval(this.rangeInterval);
+		}
+	}
     getSvgX(x){
     	let { svgWidth: width } = this.props.styles;
     	return (x / this.maxX * width);
@@ -133,13 +138,13 @@ class LineChart extends Component{
 			playing: true,
 			rangeValue: 1,
 		})
-		const rangeInterval = setInterval(()=>{
+		this.rangeInterval = setInterval(()=>{
 			this.setState({
 				rangeValue: this.state.rangeValue+1,
 				circleVisibility: this.state.rangeValue+1 !== 0 && this.state.rangeValue+1 !== 100,
 			},()=>{
 				if(this.state.rangeValue>=100){
-					clearInterval(rangeInterval);
+					clearInterval(this.rangeInterval);
 					this.setState({
 						playing: false,
 						rangeValue: 0,
@@ -156,7 +161,7 @@ class LineChart extends Component{
 		const { x: textX, y: textY } = this.centerText(this.getSvgX(data[rangeValue].x),this.getSvgY(data[rangeValue].y));
 		return(
 			<React.Fragment>
-				<svg viewBox={`0 0 ${styles.svgWidth+100} ${styles.svgHeight+100}`} className="graph">
+				<svg viewBox={`-100 -100 ${styles.svgWidth+200} ${styles.svgHeight+200}`} className="graph">
 					<path d={this.makePath()} className="linechart_path"/>
 					<Axis {...this.props} />
 					<circle 
@@ -176,8 +181,8 @@ class LineChart extends Component{
 						{rangeValue}%
 					</text>
 				</svg>
-				<Row className="p-1">
-					<Input type="range" min="0" max="100" value={!playing ? rangeValue : 0} onChange={this.handleRangeChange} disabled={playing}/>
+				<Row className="p-1 justify-content-center">
+					<Input className="w-75" type="range" min="0" max="100" value={!playing ? rangeValue : 0} onChange={this.handleRangeChange} disabled={playing}/>
 				</Row>
 				<Row className="p-2">
 					<Button className="m-auto" color="warning" onClick={this.play}> Play </Button>
@@ -196,7 +201,7 @@ class Axis extends Component{
 		return(
 			<g className="grid" id="xGrid">
 				<g className="x-axis">
-					<text x={width} y={height} class="label-title">3sec</text>
+					<text x={width} y={height}>3sec</text>
 				</g>
 				<g className="y-axis">
 					<text x="0" y="25">100%</text>
