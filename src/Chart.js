@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Container,Row,Input,Button } from 'reactstrap';
+import { Container,Row,Input,Button,Col } from 'reactstrap';
 import myData from './easing-functions-subset-1.json';
+import {select }from 'd3';
+import d from './index.css';
 /**
 * returns a function that can calculate the equation 
 * example usage: calculateEquation("2+x")(2)
@@ -16,6 +18,34 @@ export default class Chart extends Component {
 
 		this.state = {
 			dataList: this.createDataList(this.props.equation),
+			styles: this.defineStyles(),
+		}
+		this.resizeStyles = this.resizeStyles.bind(this);
+	}
+	componentDidMount(){
+		window.addEventListener("resize", this.resizeStyles);
+	}
+	componentWillUnmount(){
+		window.removeEventListener("resize", this.resizeStyles);
+	}
+	resizeStyles(){
+		this.setState({
+			styles: this.defineStyles(),
+		})
+	}
+	defineStyles(){
+		if(window.innerWidth < 850){
+			return {
+				circleRadius: 40,
+				svgHeight: 350,
+				svgWidth: 750,
+			}
+		}else{
+			return {
+				circleRadius: 40,
+				svgHeight: 600,
+				svgWidth: 1000
+			}
 		}
 	}
 	componentDidUpdate(prevProps){
@@ -42,9 +72,9 @@ export default class Chart extends Component {
 		return dataList;
 	}
 	render() {
-		const { dataList } = this.state;
+		const { dataList,styles } = this.state;
 		return (
-			<LineChart width={1000} height={600} data={dataList}/>
+			<LineChart styles={styles} data={dataList}/>
 		);
 	}
 }
@@ -57,16 +87,18 @@ class LineChart extends Component{
 		this.min = 0;
 
 		this.state = {
-			rangeValue: 0,
+			rangeValue: 10,
 			circleVisibility: false,
 		};
 		this.handleRangeChange = this.handleRangeChange.bind(this);
 	}
     getSvgX(x){
-    	return (x / this.maxX * this.props.width);
+    	let { svgWidth: width } = this.props.styles;
+    	return (x / this.maxX * width);
     }
     getSvgY(y){
-    	return this.props.height - (y / this.maxY * this.props.height);
+    	let { svgHeight: height } = this.props.styles;
+    	return height - (y / this.maxY * height);
     }
 	makePath() {
 		const { data, color } = this.props
@@ -83,23 +115,43 @@ class LineChart extends Component{
 			circleVisibility: rangeValue !== 0 && rangeValue !== 100,
 		})
 	}
+	centerText(x,y) {
+		// Get current x and y values.
+		let { circleRadius } = this.props.styles;
+		let centerX = circleRadius / 2;
+		let centerY = circleRadius / 4;
+
+		return { 
+			x :(x - centerX), 
+			y: (y + centerY)
+		};
+	}	
 	render(){
 		const { rangeValue,circleVisibility } = this.state;
-		console.log(circleVisibility,rangeValue);
-		const { data } = this.props;
+
+		const { data,styles } = this.props;
+		const { x: textX, y: textY } = this.centerText(this.getSvgX(data[rangeValue].x),this.getSvgY(data[rangeValue].y));
 		return(
 			<React.Fragment>
-				<svg viewBox={`0 0 ${this.props.width} ${this.props.height}`} className="graph">
+				<svg viewBox={`0 0 ${styles.svgWidth+100} ${styles.svgHeight+100}`} className="graph">
 					<path d={this.makePath()} className="linechart_path"/>
 					<Axis {...this.props} />
 					<circle 
 						cx={this.getSvgX(data[rangeValue].x)} 
 						cy={this.getSvgY(data[rangeValue].y)} 
 						className="progress-display"
+						r={styles.circleRadius}
 						style={{visibility: circleVisibility ? "" : "hidden"}}
-            			>
-            			{rangeValue}
-            		</circle>
+            			/>
+            		<text 
+						x={textX} 
+						y={textY}
+						fill="#343a40"
+						id="display-text"
+						style={{visibility: circleVisibility ? "" : "hidden"}}
+						className="progress-display-text">
+						{rangeValue}%
+					</text>
 				</svg>
 				<Row className="p-1">
 					<Input type="range" min="0" max="100" value={rangeValue} onChange={this.handleRangeChange} />
@@ -114,20 +166,21 @@ class LineChart extends Component{
 
 class Axis extends Component{
 	calculateYPoint(point){
-		return (point*this.props.height);
+		return (point*this.props.styles.svgHeight);
 	}
 	render(){
+		const { svgHeight:height, svgWidth: width } = this.props.styles;
 		return(
 			<g className="grid" id="xGrid">
 				<g className="x-axis">
-					<text x={this.props.width*0.96} y={this.props.height} class="label-title">3sec</text>
+					<text x={width} y={height} class="label-title">3sec</text>
 				</g>
 				<g className="y-axis">
 					<text x="0" y="25">100%</text>
 					<text x="0" y={this.calculateYPoint(1/4)}>75%</text>
 					<text x="0" y={this.calculateYPoint(2/4)}>50%</text>
 					<text x="0" y={this.calculateYPoint(3/4)}>25%</text>
-					<text x="0" y={this.props.height}>0%</text>
+					<text x="0" y={height}>0%</text>
 				</g>
 			</g>
 		);

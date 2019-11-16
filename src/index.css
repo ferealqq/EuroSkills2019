@@ -31,10 +31,15 @@ code {
 	stroke-dasharray: 0;
 	stroke-width: 1;	
 }
+.grid text{
+	font-size: 1.4em;
+}
 
 .progress-display{
-	fill: #ffffff;
+	fill: #ffff;
 	stroke: black;
 	stroke-width: 3;
-	r: 20;
+}
+.progress-display-text{
+	font-size: 1.5em;
 }

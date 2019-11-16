@@ -70,7 +70,7 @@ export default class AppContent extends Component {
 						}
 					</Col>
 
-					<Col>
+					<Col sm="6">
 						<Chart equation={easingFunctionData ? easingFunctionData.equation : null} />
 					</Col>
 				</Row>
