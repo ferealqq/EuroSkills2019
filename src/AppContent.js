@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container,Col,Form,FormGroup,Input,Label,Row,UncontrolledTooltip } from 'reactstrap';
+import { InlineMath } from 'react-katex';
 import myData from './easing-functions-subset-1.json';
 import Chart from './Chart';
 
@@ -73,7 +74,8 @@ function EasingFunctionInformation(props){
 	return(
 		<React.Fragment>
 			<Row className="px-3">
-				<p> Formula: {props.data.formula} </p>
+				<p className="px-1"> Formula: </p>
+				<InlineMath math={props.data.formula}/>
 			</Row>
 			<Row className="px-3">
 				<p> Description: {props.data.description} </p>
