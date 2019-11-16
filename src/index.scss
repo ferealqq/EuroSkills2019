@@ -1,6 +1,7 @@
 $defaultColorScheme: #FAB824;
 $shadowierDefault: #E3B614;
 $dark: #211805;
+$lightDefault: #FBCE6E;
 
 .top-banner{
 	background-color: $defaultColorScheme;
@@ -36,14 +37,21 @@ $dark: #211805;
 	transition: 0.05s ease;
 }
 
+[type="radio"]+label{
+	transition: all .2s ease-in-out;
+}
+
+[type="radio"]+ label:hover {
+	transform: scale(1.1); 
+}
+
 [type="radio"]:checked,
 [type="radio"]:not(:checked) {
     position: absolute;
     left: -9999px;
 }
 [type="radio"]:checked + label,
-[type="radio"]:not(:checked) + label
-{
+[type="radio"]:not(:checked) + label{
     position: relative;
     padding-left: 28px;
     cursor: pointer;
@@ -85,4 +93,21 @@ $dark: #211805;
     opacity: 1;
     -webkit-transform: scale(1);
     transform: scale(1);
+}
+
+.option-form{
+	background-color: $lightDefault;
+	height: fit-content;
+	border-radius: 5px;
+	-webkit-box-shadow: 3px 3px 5px 6px #ccc; 
+ 	-moz-box-shadow:    3px 3px 5px 6px #ccc;  
+ 	box-shadow:         3px 3px 3px 3px #ccc;
+}
+
+.play-btn{
+	width: 7em;
+    height: auto;
+    background: #ffd707;
+    background: -webkit-linear-gradient(299deg,#ffd707 2%,#ffc107 47%,#ffca07 80%);
+    background: linear-gradient(151deg,#ffd707 2%,#ffc107 47%,#ffca07 80%);
 }

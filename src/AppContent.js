@@ -77,7 +77,7 @@ function EasingFunctionInformation(props){
 
 function EasingOptionForm(props){
 	return(
-		<Col className="m-radio">
+		<Col className="option-form">
 			<Form>
 				<FormGroup tag="fieldset">
 					<legend>

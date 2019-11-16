@@ -133,7 +133,8 @@ class LineChart extends Component{
 			y: (y + centerY)
 		};
 	}	
-	play(){
+	play(event){
+		event.preventDefault();
 		if(this.state.playing){
 			clearInterval(this.rangeInterval);
 			this.setState({
@@ -192,7 +193,7 @@ class LineChart extends Component{
 					<Input className="w-75" type="range" min="0" max="100" value={!playing ? rangeValue : 0} onChange={this.handleRangeChange} disabled={playing}/>
 				</Row>
 				<Row className="p-2">
-					<Button className="m-auto" color="warning" onClick={this.play}> Play </Button>
+					<Button className="m-auto play-btn" color="warning" onClick={this.play}> Play </Button>
 				</Row>
 			</React.Fragment>
 		);
