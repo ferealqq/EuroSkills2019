@@ -15,3 +15,13 @@ code {
 .top-banner{
 	background-color: #FAB824;
 }
+
+.linechart_path {
+	stroke: rgb(253, 200, 39);
+	vector-effect: non-scaling-stroke; 
+	stroke-width: 3; 
+	fill: none;
+}
+.linechart_axis {
+	stroke: #000000;
+}
