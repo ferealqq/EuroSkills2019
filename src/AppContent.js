@@ -41,7 +41,38 @@ export default class AppContent extends Component {
 	}
 	render() {
 		const { easingFunctionData,isMobile } = this.state;
-		return (
+		if(!isMobile){
+			return (
+				<Container className="py-3">
+					<Row>
+						<EasingOptionForm selectEasingFunction={this.selectEasingFunction} easingFunctionData={easingFunctionData} />
+
+						<Col sm="8" id="chart-col-id">
+							<Chart equation={easingFunctionData ? easingFunctionData.equation : null} />
+						</Col>
+					</Row>
+				</Container>
+			);
+		}else{
+			return(
+				<Container className="py-3">
+					<Row>
+						<Col sm="8" id="chart-col-id">
+							<Chart equation={easingFunctionData ? easingFunctionData.equation : null} />
+						</Col>
+
+						<EasingOptionForm selectEasingFunction={this.selectEasingFunction} easingFunctionData={easingFunctionData} />
+						
+						<Col sm="8" className="justify-content-center p-3 d-flex" id="bck-btn-col">
+							<Button className="play-btn m-auto w-50" onClick={()=>window.scrollTo({top: 0, behavior: 'smooth'})}>
+								Back to the top
+							</Button>
+						</Col>					
+					</Row>
+				</Container>
+			);
+		}
+		/*return (
 			<Container className="py-3">
 				<Row>
 					{
@@ -49,18 +80,19 @@ export default class AppContent extends Component {
 							<React.Fragment>
 								<EasingOptionForm selectEasingFunction={this.selectEasingFunction} easingFunctionData={easingFunctionData} />
 
-								<Col sm="8">
+								<Col sm="8" id="chart-col-id">
 									<Chart equation={easingFunctionData ? easingFunctionData.equation : null} />
 								</Col>							
 							</React.Fragment>
 						:
 							<React.Fragment>
-								<Col sm="8">
+								<Col sm="8" id="chart-col-id">
 									<Chart equation={easingFunctionData ? easingFunctionData.equation : null} />
 								</Col>
 
 								<EasingOptionForm selectEasingFunction={this.selectEasingFunction} easingFunctionData={easingFunctionData} />
-								<Col sm="8" className="justify-content-center p-3 d-flex">
+								
+								<Col sm="8" className="justify-content-center p-3 d-flex" id="bck-btn-col">
 									<Button className="play-btn m-auto w-50" onClick={()=>window.scrollTo({top: 0, behavior: 'smooth'})}>
 										Back to the top
 									</Button>
@@ -70,14 +102,14 @@ export default class AppContent extends Component {
 
 				</Row>
 			</Container>
-		);
+		);*/
 	}
 }
 
 
 function EasingOptionForm(props){
 	return(
-		<Col className="option-form">
+		<Col className="option-form" id="option-form-id">
 			<Form>
 				<FormGroup tag="fieldset">
 					<legend id="test">

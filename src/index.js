@@ -6,15 +6,15 @@ import 'katex/dist/katex.min.css';
 import './index.scss';
 import App from './App';
 
-
+/*
 const rootElement = document.getElementById("root");
 if (rootElement.hasChildNodes()) {
 	hydrate(<App />, rootElement);
 } else {
 	render(<App />, rootElement);
-}
+}*/
 
-/*import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
@@ -22,4 +22,3 @@ ReactDOM.render(<App />, document.getElementById('root'));
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
-*/
