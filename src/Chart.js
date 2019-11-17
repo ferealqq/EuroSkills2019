@@ -221,7 +221,7 @@ class LineChart extends Component{
 					</text>
 				</svg>
 				<Row className="p-1 justify-content-center">
-					<Input className="w-75" type="range" min="0" max="100" value={!playing ? rangeValue : 0} onChange={this.handleRangeChange} disabled={playing}/>
+					<Input className="w-75" type="range" min="0" max="99" value={!playing ? rangeValue : 0} onChange={this.handleRangeChange} disabled={playing}/>
 				</Row>
 				<Row className="p-2">
 					<Button className="m-auto play-btn" color="warning" onClick={this.play}> Play </Button>
