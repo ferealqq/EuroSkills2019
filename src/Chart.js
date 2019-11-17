@@ -31,10 +31,15 @@ export default class Chart extends Component {
 			styles: this.defineStyles(),
 		})
 	}
+	/**
+	* Defines the styles needed for the chart
+	**/
 	defineStyles(){
 		if(window.innerWidth < 850){
 			return {
-				circleRadius: 40,
+				// circle radius has to be determined in javascript because the text is cordinated in the middle of the cicle
+				// the circle boundries can be calculated by the radius
+				circleRadius: 45,
 				svgHeight: 350,
 				svgWidth: 750,
 			}
@@ -53,14 +58,19 @@ export default class Chart extends Component {
 			})
 		}
 	}
+	/**
+	* Creates the needed data points to use in the chart.
+	* Calculates the needed equations to get the right chart.
+	**/
 	createDataList(equation){
 		if(!equation)
 			return;
 		let dataList = [];
-		let l = 100;
-		for (var i = 0; i <= l; i++) {
-			let sec = (i*9)/(l*3);
-			let pr = i/l;
+		let progressPoints = 100;
+		for (var i = 0; i <= progressPoints; i++) {
+			// we need to divide the progress times three with i times 9 because of the needed amount of points
+			let sec = (i*9)/(progressPoints*3);
+			let pr = i/progressPoints;
 			let dataPoint = {
 				"x": sec,
 				"y": toPercentage(calculateEquation(equation)(pr)),
@@ -92,26 +102,41 @@ class LineChart extends Component{
 		this.handleRangeChange = this.handleRangeChange.bind(this);
 		this.play = this.play.bind(this);
 	}
+	/*
+	* If the rangeInterval is still running when the component is unmounted it could cause an memory leak. So this prevents the memory leak from happening.
+	*/
 	componentWillUnmount(){
 		if(this.rangeInterval){
 			clearInterval(this.rangeInterval);
 		}
 	}
+    /*
+    * @return {Number} returns the svg cordinate for a x axis.
+    */
     getSvgX(x){
     	let { svgWidth: width } = this.props.styles;
     	return (x / this.maxX * width);
     }
+    /*
+    * @return {Number} returns the svg cordinate for a y axis.
+    */
     getSvgY(y){
     	let { svgHeight: height } = this.props.styles;
     	return height - (y / this.maxY * height);
     }
+    /*
+    * Calculates the path points of the data values
+    * @return {String} returns a string of svg path data. This path data can be rendered to visualize the chart
+    */
 	makePath() {
 		const { data, color } = this.props
 		if(!data) return "";
-		let pathD = ` M  ${this.getSvgX(data[0].x)} ${this.getSvgY(data[0].y)} `
+		let pathD = `M${this.getSvgX(data[0].x)} ${this.getSvgY(data[0].y)} `
 		pathD += data.map((point, i) => {
 			return `L ${this.getSvgX(point.x)} ${this.getSvgY(point.y)}  `
 		})
+		// needed because firefox svg path syntax will not work with commas
+		pathD = pathD.replace(/\,/g,'');
 		return pathD;
 	}    
 	handleRangeChange(event){
@@ -132,6 +157,12 @@ class LineChart extends Component{
 			y: (y + centerY)
 		};
 	}	
+	/*
+	* Starts the playing animation on the chart. 
+	* The circle will move one percent per 30 millisecond.
+	* This would be ineffective way to do the moving of the circle, but as this is just a single page app it's enough to do the job.
+	* @event {Object} MousePressEvent object which contains the data of the mouse event. 
+	*/
 	play(event){
 		event.preventDefault();
 		if(this.state.playing){
@@ -169,7 +200,8 @@ class LineChart extends Component{
 		const { x: textX, y: textY } = this.centerText(x,y);
 		return(
 			<React.Fragment>
-				<svg viewBox={`-100 -100 ${styles.svgWidth+200} ${styles.svgHeight+200}`} className="graph" xmlns="http://www.w3.org/2000/svg" version="1.1">
+				<svg viewBox={`-100 -100 ${styles.svgWidth+200} ${styles.svgHeight+200}`} className="graph">
+  					<path d="M150 0 L75 255.5900001 L299.991200113 200 Z" className="linechart_path" />
 					<path d={this.makePath()} className="linechart_path"/>
 					<Axis {...this.props} />
 					<circle 

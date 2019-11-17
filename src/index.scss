@@ -1,7 +1,10 @@
+// color scheme 
 $defaultColorScheme: #FAB824;
 $shadowierDefault: #E3B614;
 $dark: #211805;
 $lightDefault: #FBCE6E;
+// color scheme
+
 
 .top-banner{
 	background-color: $defaultColorScheme;
@@ -20,7 +23,7 @@ $lightDefault: #FBCE6E;
 
 .graph .grid{
 	stroke: #ccc;
-	stroke-dasharray: 0;	
+	stroke-dasharray: 3;	
 	stroke-width: 1;	
 }
 .grid text{
@@ -36,6 +39,9 @@ $lightDefault: #FBCE6E;
 	font-size: 1.5em;
 }
 
+/**
+* The radio button hover effects start here 
+**/
 [type="radio"]+label{
 	transition: all .2s ease-in-out;
 }
@@ -43,6 +49,12 @@ $lightDefault: #FBCE6E;
 [type="radio"]+ label:hover {
 	transform: scale(1.1); 
 }
+
+//Radio button hover effects end here
+
+/**
+* The radio button animation effect for the active mouse event start here.
+**/
 
 [type="radio"]:checked,
 [type="radio"]:not(:checked) {
@@ -94,6 +106,10 @@ $lightDefault: #FBCE6E;
     transform: scale(1);
 }
 
+// Radio button animation effects end here
+
+
+// Easing options form theme
 .option-form{
 	background-color: $lightDefault;
 	height: fit-content;
@@ -103,6 +119,8 @@ $lightDefault: #FBCE6E;
  	box-shadow:         3px 3px 3px 3px #ccc;
 }
 
+
+// Button layout
 .play-btn{
 	width: 7em;
     height: auto;
@@ -112,6 +130,9 @@ $lightDefault: #FBCE6E;
 }
 
 
+/**
+* Modal transform animation starts here.
+**/
 .modal-enter {
 	opacity: 0;
 	transform: scale(0.9);
