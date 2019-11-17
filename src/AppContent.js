@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container,Col,Form,FormGroup,Input,Label,Row,UncontrolledTooltip } from 'reactstrap';
+import { Container,Col,Form,FormGroup,Input,Label,Row,UncontrolledTooltip,Button } from 'reactstrap';
 import { InlineMath } from 'react-katex';
 import myData from './easing-functions-subset-1.json';
 import Chart from './Chart';
@@ -31,7 +31,7 @@ export default class AppContent extends Component {
 		if(this.state.easingFunctionData && this.state.easingFunctionData.text === easingFunctionKey){
 			document.getElementById(easingFunctionKey).checked = false;
 			this.setState({
-				easingFunctionData: {},
+				easingFunctionData: null,
 			})
 		}else{
 			this.setState({
@@ -60,6 +60,11 @@ export default class AppContent extends Component {
 								</Col>
 
 								<EasingOptionForm selectEasingFunction={this.selectEasingFunction} easingFunctionData={easingFunctionData} />
+								<Col sm="8" className="justify-content-center p-3 d-flex">
+									<Button className="play-btn m-auto w-50" onClick={()=>window.scrollTo({top: 0, behavior: 'smooth'})}>
+										Back to the top
+									</Button>
+								</Col>
 							</React.Fragment>
 					}
 
@@ -69,20 +74,6 @@ export default class AppContent extends Component {
 	}
 }
 
-
-function EasingFunctionInformation(props){
-	return(
-		<React.Fragment>
-			<Row className="px-3">
-				<p className="px-1"> Formula: </p>
-				<InlineMath math={props.data.formula}/>
-			</Row>
-			<Row className="px-3">
-				<p> Description: {props.data.description} </p>
-			</Row>
-		</React.Fragment>
-	);
-}
 
 function EasingOptionForm(props){
 	return(
@@ -155,5 +146,19 @@ function EasingOptionForm(props){
 					null
 			}
 		</Col>		
+	);
+}
+
+function EasingFunctionInformation(props){
+	return(
+		<React.Fragment>
+			<Row className="px-3">
+				<p className="px-1"> Formula: </p>
+				<InlineMath math={props.data ? props.data.formula : ""}/>
+			</Row>
+			<Row className="px-3">
+				<p> Description: {props.data.description} </p>
+			</Row>
+		</React.Fragment>
 	);
 }

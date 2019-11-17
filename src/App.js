@@ -1,5 +1,5 @@
 import React, { Component,useState,useEffect } from 'react';
-import { Row,Button,Col,Container } from 'reactstrap';
+import { Row,Button,Col,Container,Modal,ModalHeader,ModalBody,ModalFooter } from 'reactstrap';
 import { MdInfo } from 'react-icons/md';
 import { CSSTransition } from 'react-transition-group';
 import AppContent from './AppContent';
@@ -18,68 +18,23 @@ export default class App extends Component {
         })
     }
     render() {
-        const { isAbout } = this.state;
-        const duration = 300;
-
-        const defaultStyle = {
-            transition: `opacity ${duration}ms ease-in-out`,
-            opacity: 0,
-        }
-
-        const transitionStyles = {
-            entering: { opacity: 1 },
-            entered:  { opacity: 1 },
-            exiting:  { opacity: 0 },
-            exited:  { opacity: 0 },
-        };        
+        const { isAbout } = this.state;       
         return(
             <div>
                 <Header handleAboutClick={this.handleAboutClick} isAbout={isAbout}/>
-                {
-                    !isAbout ? 
-                        <CSSTransition
-                            in={!isAbout}
-                            timeout={300}
-                            classNames="alert"
-                            unmountOnExit
-                        >                    
-                            <AppContent />
-                        </CSSTransition>                
-                :
-                        <CSSTransition
-                            in={isAbout}
-                            timeout={300}
-                            classNames="alert"
-                            unmountOnExit
-                        >                    
-                            <Container>
-                                <p> This is the about page </p>
-                                <p> My name is Pekka Mattinen, I have decided to accept this challenge </p>
-                                <p> This is the prelude exercise for EuroSkills 2020 Finnish pruning trials </p>
-                            </Container>
-                        </CSSTransition>                 
-                }
+                <AppContent />
+                <CSSTransition
+                    in={isAbout}
+                    timeout={300}
+                    classNames="modal"
+                    unmountOnExit
+                >                    
+                    <AboutPopup handleAboutClick={this.handleAboutClick} isAbout={isAbout}/>
+                </CSSTransition>                 
             </div>
         );
     }
 }
-
-/**
-                {
-                    !isAbout ?
-                        <div className="page-content">
-                            <AppContent />
-                        </div>
-                    :
-                        <div className="page-content about-page">
-                            <Container>
-                                <p> this is the about page </p>
-                                <p> My name is Pekka Mattinen, I have decided to accept this challenge </p>
-                                <p> This is the prelude exercise for EuroSkills 2020 Finnish pruning trials </p>
-                            </Container>
-                        </div>
-                } 
-**/
 
 /**
 * Header/Top Banner for the webpage
@@ -115,5 +70,22 @@ function Header(props){
                 </Row>
             </Container>  
         </div>      
+    );
+}
+
+function AboutPopup(props){
+    return(
+        <Modal isOpen={props.isAbout} onClick={props.handleAboutClick}>
+            <ModalHeader>
+                <p> This is the about page </p>
+            </ModalHeader>
+            <ModalBody>
+                <p> My name is Pekka Mattinen, I have decided to accept this challenge </p>
+                <p> This is the prelude exercise for EuroSkills 2020 Finnish pruning trials </p>
+            </ModalBody>
+            <ModalFooter>
+                <Button className="play-btn" onClick={props.handleAboutClick}> Close </Button>
+            </ModalFooter>
+        </Modal>        
     );
 }
