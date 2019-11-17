@@ -1,11 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM,{render,hydrate} from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import 'katex/dist/katex.min.css';
 import './index.scss';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+
+
+const rootElement = document.getElementById("root");
+if (rootElement.hasChildNodes()) {
+	hydrate(<App />, rootElement);
+} else {
+	render(<App />, rootElement);
+}
+
+/*import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
@@ -13,3 +22,4 @@ ReactDOM.render(<App />, document.getElementById('root'));
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+*/
