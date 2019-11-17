@@ -201,7 +201,6 @@ class LineChart extends Component{
 		return(
 			<React.Fragment>
 				<svg viewBox={`-100 -100 ${styles.svgWidth+200} ${styles.svgHeight+200}`} className="graph">
-  					<path d="M150 0 L75 255.5900001 L299.991200113 200 Z" className="linechart_path" />
 					<path d={this.makePath()} className="linechart_path"/>
 					<Axis {...this.props} />
 					<circle 
