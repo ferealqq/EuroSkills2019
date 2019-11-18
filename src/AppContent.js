@@ -7,7 +7,7 @@ import Chart from './Chart';
 export default class AppContent extends Component {
 	state = {
 		easingFunctionData: null,
-		isMobile: window.innerWidth < 850,
+		isMobile: window.innerWidth < 900,
 	};
 	constructor(props){
 		super(props);
@@ -21,9 +21,9 @@ export default class AppContent extends Component {
 		window.removeEventListener("resize", this.setMobile);
 	}
 	setMobile(){
-		if((window.innerWidth < 850) !== this.state.isMobile){
+		if((window.innerWidth < 900) !== this.state.isMobile){
 			this.setState({
-				isMobile: window.innerWidth < 850,
+				isMobile: window.innerWidth < 900,
 			})
 		}
 	}
@@ -37,16 +37,18 @@ export default class AppContent extends Component {
 			this.setState({
 				easingFunctionData: myData.easingFunctions[easingFunctionKey],
 			})
-		}
+		}	
 	}
 	render() {
 		const { easingFunctionData,isMobile } = this.state;
 		if(!isMobile){
 			return (
-				<Container className="py-3">
-					<Row>
-						<EasingOptionForm selectEasingFunction={this.selectEasingFunction} easingFunctionData={easingFunctionData} />
-
+				<Container className="py-1">
+					<Row className="app-content-div py-2">
+						<Col className="pt-5">
+							<EasingOptionForm selectEasingFunction={this.selectEasingFunction} easingFunctionData={easingFunctionData} />
+						</Col>
+						
 						<Col sm="8" id="chart-col-id">
 							<Chart equation={easingFunctionData ? easingFunctionData.equation : null} />
 						</Col>
@@ -57,59 +59,28 @@ export default class AppContent extends Component {
 			return(
 				<Container className="py-3">
 					<Row>
-						<Col sm="8" id="chart-col-id">
-							<Chart equation={easingFunctionData ? easingFunctionData.equation : null} />
-						</Col>
-
-						<EasingOptionForm selectEasingFunction={this.selectEasingFunction} easingFunctionData={easingFunctionData} />
-						
-						<Col sm="8" className="justify-content-center p-3 d-flex" id="bck-btn-col">
-							<Button className="play-btn m-auto w-50" onClick={()=>window.scrollTo({top: 0, behavior: 'smooth'})}>
-								Back to the top
-							</Button>
-						</Col>					
+						<Chart equation={easingFunctionData ? easingFunctionData.equation : null} />
 					</Row>
+					
+					<Row className="justify-content-center">
+							<EasingOptionForm selectEasingFunction={this.selectEasingFunction} easingFunctionData={easingFunctionData} />
+					</Row>
+					
+					<Row className="justify-content-center p-3 d-flex" id="bck-btn-col">
+						<Button className="play-btn m-auto w-50" onClick={()=>window.scrollTo({top: 0, behavior: 'smooth'})}>
+							Back to the top
+						</Button>
+					</Row>					
 				</Container>
 			);
 		}
-		/*return (
-			<Container className="py-3">
-				<Row>
-					{
-						!isMobile ? 
-							<React.Fragment>
-								<EasingOptionForm selectEasingFunction={this.selectEasingFunction} easingFunctionData={easingFunctionData} />
-
-								<Col sm="8" id="chart-col-id">
-									<Chart equation={easingFunctionData ? easingFunctionData.equation : null} />
-								</Col>							
-							</React.Fragment>
-						:
-							<React.Fragment>
-								<Col sm="8" id="chart-col-id">
-									<Chart equation={easingFunctionData ? easingFunctionData.equation : null} />
-								</Col>
-
-								<EasingOptionForm selectEasingFunction={this.selectEasingFunction} easingFunctionData={easingFunctionData} />
-								
-								<Col sm="8" className="justify-content-center p-3 d-flex" id="bck-btn-col">
-									<Button className="play-btn m-auto w-50" onClick={()=>window.scrollTo({top: 0, behavior: 'smooth'})}>
-										Back to the top
-									</Button>
-								</Col>
-							</React.Fragment>
-					}
-
-				</Row>
-			</Container>
-		);*/
 	}
 }
 
 
 function EasingOptionForm(props){
 	return(
-		<Col className="option-form" id="option-form-id">
+		<div className="option-form">
 			<Form>
 				<FormGroup tag="fieldset">
 					<legend id="test">
@@ -177,7 +148,7 @@ function EasingOptionForm(props){
 				:
 					null
 			}
-		</Col>		
+		</div>		
 	);
 }
 

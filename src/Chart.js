@@ -141,6 +141,8 @@ class LineChart extends Component{
 		return pathD;
 	}    
 	handleRangeChange(event){
+		// to prevent change in rangeValue if data set has not been selected
+		if(!this.props.data) return;
 		const rangeValue = parseInt(event.target.value);
 		this.setState({
 			rangeValue: rangeValue, 
@@ -173,6 +175,9 @@ class LineChart extends Component{
 				rangeValue: 0,
 				circleVisibility: false,
 			})		
+		// to prevent playing without selected data set.
+		}else if(!this.props.data){
+			return;
 		}
 		this.setState({
 			playing: true,
@@ -200,7 +205,7 @@ class LineChart extends Component{
 		let y = data ? this.getSvgY(data[rangeValue].y) : 0;
 		const { x: textX, y: textY } = this.centerText(x,y);
 		return(
-			<React.Fragment>
+			<Container fluid>
 				<svg viewBox={`-100 -100 ${styles.svgWidth+200} ${styles.svgHeight+200}`} className="graph">
 					<path d={this.makePath()} className="linechart_path"/>
 					<Axis {...this.props} />
@@ -227,7 +232,7 @@ class LineChart extends Component{
 				<Row className="p-2">
 					<Button className="m-auto play-btn" color="warning" onClick={this.play}> Play </Button>
 				</Row>
-			</React.Fragment>
+			</Container>
 		);
 	}
 }

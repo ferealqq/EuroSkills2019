@@ -4,50 +4,40 @@ import { MdInfo } from 'react-icons/md';
 import { CSSTransition } from 'react-transition-group';
 import AppContent from './AppContent';
 
-export default class App extends Component {
-    state = {
-        isAbout: false,
-    };
-    constructor(props){
-        super(props);
-        this.handleAboutClick = this.handleAboutClick.bind(this);
-    }
-    handleAboutClick(){
-        this.setState({
-            isAbout: !this.state.isAbout,
-        })
-    }
-    render() {
-        const { isAbout } = this.state;       
-        return(
-            <div>
-                <Header handleAboutClick={this.handleAboutClick} isAbout={isAbout}/>
-                <AppContent />
-                <CSSTransition
-                    in={isAbout}
-                    timeout={300}
-                    classNames="modal"
-                    unmountOnExit
-                >                    
-                    <AboutPopup handleAboutClick={this.handleAboutClick} isAbout={isAbout}/>
-                </CSSTransition>                 
-            </div>
-        );
-    }
+export default function App(props) {
+    const [isAbout,toggleAbout] = useState(false);
+    const [isMobile,toggleMobile] = useState(window.innerWidth > 900);
+
+    const handleAboutClick = () => toggleAbout(!isAbout);
+
+    window.addEventListener("resize", ()=>{
+        let curWindowState = (window.innerWidth > 900)
+        if(isMobile !== curWindowState)
+            toggleMobile(curWindowState);
+    });
+
+
+    return(
+        <div className={isMobile ? "background" : ""}>
+            <Header handleAboutClick={handleAboutClick} isAbout={isAbout} isMobile={isMobile}/>
+            <AppContent />
+            <CSSTransition
+                in={isAbout}
+                timeout={300}
+                classNames="modal"
+                unmountOnExit
+            >                    
+                <AboutPopup handleAboutClick={handleAboutClick} isAbout={isAbout}/>
+            </CSSTransition>                 
+        </div>
+    );
 }
 
 /**
 * Header/Top Banner for the webpage
 **/
 function Header(props){
-    const [isMobile,toggleMobile] = useState(window.innerWidth > 850);
-
-    window.addEventListener("resize", ()=>{
-        let curWindowState = (window.innerWidth > 850)
-        if(isMobile !== curWindowState)
-            toggleMobile(curWindowState);
-    });
-
+    const { isMobile,handleAboutClick } = props;
     return(
         <div className="w-100 mw-100 top-banner">
             <Container className="py-3">
@@ -60,11 +50,11 @@ function Header(props){
                     <Col className="d-flex">
                         {
                             isMobile ?   
-                                <Button className="ml-auto" onClick={props.handleAboutClick}>
+                                <Button className="ml-auto" onClick={handleAboutClick}>
                                     About
                                 </Button>
                             :
-                                <MdInfo className="ml-auto h1" onClick={props.handleAboutClick}/> 
+                                <MdInfo className="ml-auto h1" onClick={handleAboutClick}/> 
                         }    
                     </Col>      
                 </Row>
