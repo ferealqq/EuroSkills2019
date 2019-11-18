@@ -150,3 +150,13 @@ $lightDefault: #FBCE6E;
 	transform: scale(0.9);
 	transition: opacity 300ms, transform 300ms;
 }
+
+.axis-line{
+    stroke: $shadowierDefault;
+    stroke-width: 3px; 
+}
+
+.axis-line-grey{
+    stroke: grey;
+    stroke-width: 1.5px; 
+}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container,Row,Input,Button,Col } from 'reactstrap';
+import { times } from 'lodash';
 import myData from './easing-functions-subset-1.json';
 /**
 * returns a function that can calculate the equation 
@@ -47,7 +48,7 @@ export default class Chart extends Component {
 			return {
 				circleRadius: 40,
 				svgHeight: 600,
-				svgWidth: 1000
+				 svgWidth: 1000
 			}
 		}
 	}
@@ -69,7 +70,7 @@ export default class Chart extends Component {
 		let progressPoints = 100;
 		for (var i = 0; i <= progressPoints; i++) {
 			// we need to divide the progress times three with i times 9 because of the needed amount of points
-			let sec = (i*9)/(progressPoints*3);
+			let sec = (i*3)/(progressPoints);
 			let pr = i/progressPoints;
 			let dataPoint = {
 				"x": sec,
@@ -217,7 +218,7 @@ class LineChart extends Component{
 						id="display-text"
 						style={{visibility: circleVisibility ? "" : "hidden"}}
 						className="progress-display-text">
-						{rangeValue}%
+						{data && data[rangeValue] ? Math.round(data[rangeValue].y) : null}%
 					</text>
 				</svg>
 				<Row className="p-1 justify-content-center">
@@ -235,18 +236,29 @@ class Axis extends Component{
 	calculateYPoint(point){
 		return (point*this.props.styles.svgHeight);
 	}
+	calculateXPoint(point){
+		return (point*this.props.styles.svgWidth);
+	}
 	render(){
 		const { svgHeight:height, svgWidth: width } = this.props.styles;
 		return(
 			<g className="grid" id="xGrid">
 				<g className="x-axis">
+					<line className="axis-line" x1={width} y1={height}  x2="0" y2={height}/>				
 					<text x={width} y={height}>3sec</text>
+					{
+						times(10,(round)=><line className="axis-line-grey" x1={this.calculateXPoint(round/10)} y1="0" x2={this.calculateXPoint(round/10)} y2={height}/>)
+					}					
 				</g>
-				<g className="y-axis">
+				<g>
+					<line className="axis-line" x1="0" y1="0"  x2="0" y2={height}/>				
 					<text x="0" y="25">100%</text>
 					<text x="0" y={this.calculateYPoint(1/4)}>75%</text>
 					<text x="0" y={this.calculateYPoint(2/4)}>50%</text>
 					<text x="0" y={this.calculateYPoint(3/4)}>25%</text>
+					{
+						times(10,(round)=><line className="axis-line-grey" x1={width} y1={this.calculateYPoint(round/10)}  x2="0" y2={this.calculateYPoint(round/10)}/>)
+					}
 					<text x="0" y={height}>0%</text>
 				</g>
 			</g>
